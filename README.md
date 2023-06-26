@@ -17,4 +17,4 @@ if terminal w is < 200:
 
 install with:
 
-wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme -O ->> ~/.bashrc
+BRCFILE='~/.bashrc';sed -i '/###  FANCY BASHRC  ###/,/### \/FANCY BASHRC  ###/d' $BRCFILE;wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme -O ->> $$BRCFILE
