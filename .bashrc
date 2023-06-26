@@ -19,15 +19,23 @@ function get_ip () {
   fi
 }
 
+get_user_color() {
+    if [[ $(whoami) == "root" ]]; then
+        echo "\[\033[38;5;1m\]"  # red
+    else
+        echo "\[\033[38;5;226m\]"  # yellow
+    fi
+}
+
 if [ $(tput cols) -lt 200 ]; then
     if [ $(tput colors) -gt 7 ]; then
-        export PS1="[ \[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\n\\$ \[$(tput sgr0)\]"
+        export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\n\\$ \[$(tput sgr0)\]"
     else
         export PS1="[ \u@\H$(get_ip) \w ]\n\\$ \[$(tput sgr0)\]"
     fi
 else
     if [ $(tput colors) -gt 7 ]; then
-        export PS1="[ \[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\\$ \[$(tput sgr0)\]"
+        export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\\$ \[$(tput sgr0)\]"
     else
         export PS1="[ \u@\H$(get_ip) \w ]\\$ \[$(tput sgr0)\]"
     fi
