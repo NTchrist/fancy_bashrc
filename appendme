@@ -30,4 +30,12 @@ else
     fi
 fi
 #unset color_prompt force_color_prompt
+
+#automatically cat tmux motd if exists
+if [ -n "$TMUX" ]; then
+  if [ -f ~/.tmux.motd ]; then
+    cat ~/.tmux.motd
+  fi
+fi
+
 ### /FANCY BASHRC  ###
