@@ -1,6 +1,8 @@
 # fancy_bashrc
 Fancy resizing bashrc for servers
 
+Also appends up/down arrow-based history completion for partial commands to ~/.inputrc
+
 --
 
 if terminal w is > 200:
