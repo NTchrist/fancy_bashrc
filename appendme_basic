@@ -1,0 +1,38 @@
+###  FANCY BASHRC  ###
+get_user_color() {
+    if [[ $(whoami) == "root" ]]; then
+        echo "\[\033[38;5;1m\]"  # red
+    else
+        echo "\[\033[38;5;226m\]"  # yellow
+    fi
+}
+
+if [ -f /hostname_override ]; then
+  FBRC_HOSTNAME=$(cat /hostname_override)
+else
+  FBRC_HOSTNAME=$HOSTNAME
+fi
+
+if [ $(tput cols) -lt 180 ]; then
+    if [ $(tput colors) -gt 7 ]; then
+        export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] ]\n\\$ \[$(tput sgr0)\]"
+    else
+        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] ]\n\\$ "
+    fi
+else
+    if [ $(tput colors) -gt 7 ]; then
+        export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] ]\\$ \[$(tput sgr0)\]"
+    else
+        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] ]\\$ "
+    fi
+fi
+#unset color_prompt force_color_prompt
+
+#automatically cat tmux motd if exists
+if [ -n "$TMUX" ]; then
+  if [ -f ~/.tmux.motd ]; then
+    cat ~/.tmux.motd
+  fi
+fi
+
+### /FANCY BASHRC  ###
