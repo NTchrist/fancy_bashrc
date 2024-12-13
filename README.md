@@ -18,8 +18,14 @@ if terminal w is < 200:
 ```
 
 
-install with:
+install with (full):
 
 ```
 BRCFILE=~/.bashrc;IRCFILE=~/.inputrc;sed -i '/###  FANCY BASHRC  ###/,/### \/FANCY BASHRC  ###/d' $BRCFILE;wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme -O ->> $BRCFILE;sed -i '/###  FANCY BASHRC  ###/,/### \/FANCY BASHRC  ###/d' $IRCFILE;wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme_inputrc -O ->> $IRCFILE
+```
+
+install with (basic):
+
+```
+BRCFILE=~/.bashrc;IRCFILE=~/.inputrc;sed -i '/###  FANCY BASHRC  ###/,/### \/FANCY BASHRC  ###/d' $BRCFILE;wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme_basic -O ->> $BRCFILE;sed -i '/###  FANCY BASHRC  ###/,/### \/FANCY BASHRC  ###/d' $IRCFILE;wget https://raw.githubusercontent.com/NTchrist/fancy_bashrc/main/appendme_inputrc -O ->> $IRCFILE
 ```
