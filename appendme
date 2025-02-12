@@ -31,7 +31,7 @@ else
 fi
 #unset color_prompt force_color_prompt
 
-if [ $(tput colors) -eq 256 ]; then
+if [ $(tput colors) -gt 7 ]; then
     TERM=xterm-256color
 fi
 
