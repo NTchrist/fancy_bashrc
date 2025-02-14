@@ -35,11 +35,23 @@ if [ $(tput colors) -gt 7 ]; then
     TERM=xterm-256color
 fi
 
-#automatically cat tmux motd if exists
+# automatically cat tmux motd if exists, and set terminal to bottom
 if [ -n "$TMUX" ]; then
-  if [ -f ~/.tmux.motd ]; then
-    cat ~/.tmux.motd
-  fi
+    # Clear the terminal
+    clear
+    # Get the number of terminal lines
+    lines=$(tput lines)
+
+    # Ensure the value is within a reasonable range
+    if [[ $lines -gt 5 && $lines -lt 500 ]]; then
+        # Move the prompt to the bottom of the terminal safely
+        for ((i = 1; i < lines; i++)); do echo; done
+    else
+        echo "Warning: 'tput lines' returned an unexpected value ($lines), skipping newline fill."
+    fi
+    if [ -f ~/.tmux.motd ]; then
+        cat ~/.tmux.motd
+    fi
 fi
 
 ### /FANCY BASHRC  ###
