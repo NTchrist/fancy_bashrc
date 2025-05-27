@@ -46,8 +46,29 @@ else
 fi
 #unset color_prompt force_color_prompt
 
+detect_environment_and_set_TERM() {
+    local pid=$$
+    local max_depth=10  # avoid infinite loops
+
+    while [ "$pid" -gt 1 ] && [ "$max_depth" -gt 0 ]; do
+        cmd="$(ps -o comm= -p "$pid" 2>/dev/null)"
+        if [[ "$cmd" == tmux* ]]; then
+            export TERM=tmux-256color
+            return
+        elif [[ "$cmd" == screen* ]]; then
+            export TERM=screen-256color
+            return
+        fi
+        pid="$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')"
+        max_depth=$((max_depth - 1))
+    done
+
+    # Default fallback
+    export TERM=xterm-256color
+}
+
 if [ $(tput colors) -gt 7 ]; then
-    TERM=screen-256color
+    detect_environment_and_set_TERM
 fi
 
 # automatically cat tmux motd if exists, and set terminal to bottom
