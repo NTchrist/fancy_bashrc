@@ -68,11 +68,13 @@ if [ $(tput colors) -gt 7 ]; then
     detect_environment_and_set_TERM
 fi
 
-#automatically cat tmux motd if exists
+# automatically cat tmux motd if exists, and set terminal to bottom
 if [ -n "$TMUX" ]; then
-  if [ -f ~/.tmux.motd ]; then
-    cat ~/.tmux.motd
-  fi
+    # clear screen and move cursor to bottom
+    bclear
+    if [ -f ~/.tmux.motd ]; then
+        cat ~/.tmux.motd
+    fi
 fi
 
 ### /FANCY BASHRC  ###
