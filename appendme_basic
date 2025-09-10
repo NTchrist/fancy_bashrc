@@ -7,6 +7,21 @@ get_user_color() {
     fi
 }
 
+bclear(){
+    # Clear the terminal
+    clear
+    # Get the number of terminal lines
+    lines=$(tput lines)
+
+    # Ensure the value is within a reasonable range
+    if [[ $lines -gt 5 && $lines -lt 500 ]]; then
+        # Move the prompt to the bottom of the terminal safely
+        for ((i = 1; i < lines; i++)); do echo; done
+    else
+        echo "Warning: 'tput lines' returned an unexpected value ($lines), skipping newline fill."
+    fi
+}
+
 if [ -f /hostname_override ]; then
   FBRC_HOSTNAME=$(cat /hostname_override)
 else
