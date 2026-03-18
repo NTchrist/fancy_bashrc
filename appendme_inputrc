@@ -1,4 +1,11 @@
 ###  FANCY BASHRC  ###
+# Up/Down arrow partial history search
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+# Home / End (RoyalTS sequences)
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+# Ctrl + Left / Right (RoyalTS sequences)
+"\eOD": backward-word
+"\eOC": forward-word
 ### /FANCY BASHRC  ###
