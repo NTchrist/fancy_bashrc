@@ -2,7 +2,7 @@
 function get_ip () {
   IFACE=$(ip -4 route | grep default | head -n1 | awk '{print $5}')
   if [ ! -z $IFACE ]; then
-     echo -n "|"; ip -4 -o addr show scope global $IFACE | awk '{gsub(/\..*/, "|",$4); print $4}' | paste -s -d ""
+     echo -n "|"; ip -4 -o addr show scope global $IFACE | awk '{gsub(/\/.*/, "|",$4); print $4}' | paste -s -d ""
   else
     echo -n "|IP_NOT_FOUND_CHECK_BASHRC|"
   fi
