@@ -28,17 +28,17 @@ else
   FBRC_HOSTNAME=$HOSTNAME
 fi
 
-if [ $(tput cols) -lt 180 ]; then
-    if [ $(tput colors) -gt 7 ]; then
+if [ -t 1 ] && [ "$(tput cols 2>/dev/null || echo 200)" -lt 180 ]; then
+    if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
         export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] \w ]\n\\$ \[$(tput sgr0)\]"
     else
-        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] \w ]\n\\$ "
+        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0 2>/dev/null)\] \w ]\n\\$ "
     fi
 else
-    if [ $(tput colors) -gt 7 ]; then
+    if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
         export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] \w ]\\$ \[$(tput sgr0)\]"
     else
-        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0)\] \w ]\\$ "
+        export PS1="[ \u@$(echo $FBRC_HOSTNAME)\[$(tput sgr0 2>/dev/null)\] \w ]\\$ "
     fi
 fi
 #unset color_prompt force_color_prompt
@@ -64,7 +64,7 @@ detect_environment_and_set_TERM() {
     export TERM=xterm-256color
 }
 
-if [ $(tput colors) -gt 7 ]; then
+if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
     detect_environment_and_set_TERM
 fi
 
