@@ -2,7 +2,7 @@
 function get_ip () {
   IFACE=$(ip -4 route | grep default | head -n1 | awk '{print $5}')
   if [ ! -z $IFACE ]; then
-     echo -n "|"; ip -4 -o addr show scope global $IFACE | awk '{gsub(/\/.*/, "|",$4); print $4}' | paste -s -d ""
+     echo -n "|"; ip -4 -o addr show scope global $IFACE | awk '{gsub(/\..*/, "|",$4); print $4}' | paste -s -d ""
   else
     echo -n "|IP_NOT_FOUND_CHECK_BASHRC|"
   fi
@@ -31,17 +31,17 @@ bclear(){
     fi
 }
 
-if [ $(tput cols) -lt 180 ]; then
-    if [ $(tput colors) -gt 7 ]; then
+if [ -t 1 ] && [ "$(tput cols 2>/dev/null || echo 200)" -lt 180 ]; then
+    if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
         export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\n\\$ \[$(tput sgr0)\]"
     else
-        export PS1="[ \u@\H$(get_ip) \w ]\n\\$ \[$(tput sgr0)\]"
+        export PS1="[ \u@\H$(get_ip) \w ]\n\\$ \[$(tput sgr0 2>/dev/null)\]"
     fi
 else
-    if [ $(tput colors) -gt 7 ]; then
+    if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
         export PS1="[ \[$(tput sgr0)\]$(get_user_color)\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;2m\]\H\[$(tput sgr0)\]\[\033[38;5;6m\]$(get_ip)\[$(tput sgr0)\] \w ]\\$ \[$(tput sgr0)\]"
     else
-        export PS1="[ \u@\H$(get_ip) \w ]\\$ \[$(tput sgr0)\]"
+        export PS1="[ \u@\H$(get_ip) \w ]\\$ \[$(tput sgr0 2>/dev/null)\]"
     fi
 fi
 #unset color_prompt force_color_prompt
@@ -67,7 +67,7 @@ detect_environment_and_set_TERM() {
     export TERM=xterm-256color
 }
 
-if [ $(tput colors) -gt 7 ]; then
+if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -gt 7 ]; then
     detect_environment_and_set_TERM
 fi
 
